@@ -1,0 +1,20 @@
+; Raw key codes
+
+Up= 0,17,0
+Down= 0,33,0
+Left= 0,32,0
+Right= 0,34,0
+Button 1= 0,64,0
+Button 2= 0,57,0
+Button 3= 0,56,0
+Button 4= 1,104,16384
+Button 5= 1,106,4096
+Button 6= 1,105,8192
+Button 7= 0,7,0
+Button 8= 0,8,0
+Button 9= 0,9,0
+Button 10= 0,1,0
+Button 11= 0,2,0
+Button 12= 0,3,0
+Axis 1= 0
+Axis 2= 0

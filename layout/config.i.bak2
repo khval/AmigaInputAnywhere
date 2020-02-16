@@ -1,0 +1,114 @@
+
+struct List list_buttons;
+
+struct ColumnInfo config_ci[] =
+{
+	{ 50, "Name", 0 },
+	{ 50, "Action code",0 },
+	{ -1, (STRPTR)~0, -1 }
+};
+
+
+
+BOOL make_cfg_list(struct List *list)
+{
+/*
+	struct Node *node;
+	WORD n = 0;
+
+	for (n=0; n<joypad_buttons;n++)
+	{
+		if (node = IListBrowser->AllocListBrowserNode(2,
+
+						LBNA_Column, 0,
+							LBNCA_CopyText, TRUE,
+							LBNCA_Text, "A", //config.button[n].name,
+							LBNCA_Editable, FALSE,
+
+						LBNA_Column, 1,
+							LBNCA_CopyText, TRUE,
+							LBNCA_Text, "B", //config.button[n].action,
+							LBNCA_Editable, FALSE,
+
+						TAG_DONE))
+		{
+			IExec->AddTail(list, node);
+		}
+		else break;
+	}
+*/
+	return(TRUE);
+}
+
+
+struct Gadget	*gParent = NULL;
+
+void init_configmenu(Object **win)
+{
+
+	if (!gParent)
+	{
+	gParent = VGroupObject,
+		ICA_TARGET, ICTARGET_IDCMP,
+
+		LAYOUT_SpaceOuter, TRUE,
+		LAYOUT_BevelStyle, BVS_GROUP,
+		LAYOUT_DeferLayout, TRUE,	/* this tag instructs layout.gadget to
+								 * defer GM_LAYOUT and GM_RENDER and ask
+								 * the application to do them. This
+								 * lessens the load on input.device
+								 */
+
+				LAYOUT_AddChild, Objects[ga_config_list] =ListBrowserObject,
+						GA_ID,	ga_config_list,
+						LISTBROWSER_Labels, list_buttons,
+						LISTBROWSER_ColumnInfo, config_ci,
+						LISTBROWSER_ColumnTitles, TRUE,
+						LISTBROWSER_MultiSelect, FALSE,
+						LISTBROWSER_Separators, TRUE,
+						LISTBROWSER_ShowSelected, TRUE,
+						LISTBROWSER_Editable, FALSE,
+					End,
+
+		LAYOUT_AddChild, HGroupObject,
+				// four buttons sized in another way 
+				LAYOUT_AddChild, ButtonObject,
+						GA_ID,	2,
+						GA_Text, "1",
+					End,
+
+				LAYOUT_AddChild, ButtonObject,
+						GA_ID,	3,
+						GA_Text, "2",
+					End,
+			End,
+			CHILD_WeightedHeight,0,
+			CHILD_MinWidth, 300,
+		End;
+	}
+
+
+	*win = WindowObject,
+				
+		/* these tags describe the window  */
+		
+		WA_IDCMP, IDCMP_RAWKEY | IDCMP_GADGETUP  | IDCMP_GADGETDOWN,
+		WA_Top, 20,
+		WA_Left, 20,
+		WA_Width, 400,
+		WA_Height, 200,
+		WA_SizeGadget, TRUE,
+		WA_DepthGadget, TRUE,
+		WA_DragBar, TRUE,
+		WA_CloseGadget, FALSE,
+		WA_Activate, TRUE,
+		WA_SmartRefresh, TRUE,
+		WA_Title, "AmigaInputAnywhere",
+		WA_ScreenTitle, "AmigaInputAnywhere",
+				
+						
+		/* Below is the layout of the window  */
+				
+		WINDOW_ParentGroup, gParent,
+		EndWindow;
+}

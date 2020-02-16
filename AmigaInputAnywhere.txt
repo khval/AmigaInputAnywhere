@@ -1,0 +1,33 @@
+Written by:	Kjetil Hvalstrand 
+Nick:			NutsAboutAmiga / LiveForIt
+License:		Freeware
+
+This programs makes games that only support keyboard and mouse to use gamepads and joysticks.
+
+AmigaInputAnyware 2.3 (09-Aug-2011)
+
+* Removed lots of Printf()
+* CloseWindow now works when you edit config.
+* Joypad Axis 1 and 2 are now saved in config.
+
+AmigaInputAnyware 2.2 (02-Feb-2010)
+
+* Reaction error requestor added, improved error messages and text output.
+
+AmigaInputAnywhere 2.1 (23-Jan-2010)
+
+* Removed ExNext(), Examine()
+* Hook for AIN_EnumDevices() did not return True or False fixed.
+* Added a check to see if device is connected.
+* Removed a new DSI error, after installing AmigaOS4.1 update 1!
+
+AmigaInputAnywhere 2.0 (19-Jun-2007)
+
+I just realized I never uploaded this version, 
+* The Prefs_Anywhere is now a part of the program
+* You can now easily switch between mouse and keyboard controlled by axes.
+
+AmigaInputAnywhere 1.0 (07 Jun 2007)
+
+the program comes whit Prefs_Anywhere that is used to configure the keyboard mapping to the joypad buttons.
+
