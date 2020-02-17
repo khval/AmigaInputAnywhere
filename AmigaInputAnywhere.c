@@ -84,14 +84,10 @@ char			*cfg_filename = NULL;
 int			 gad_height;
 int			wh,ww;
 
-struct MsgPort *appport;
-
 struct Screen	*scr;
 struct Gadget	*GadgetHit;
 struct List list_buttons;
 
-struct Library		*AIN_Base = NULL;
-struct AIN_IFace	*IAIN = NULL;
 struct ai_type *aio = NULL;
 
 extern void close_ainput( struct ai_type **ai_io );
@@ -363,7 +359,6 @@ int get_r_event( int (*fn_event) (int id,int code) )
 	return done;
 }
 
-struct MsgPort	*io_msg = NULL;
 
 
 int close_menu(int layout_nr)
@@ -495,7 +490,6 @@ void init_vars()
 
 int main_safe()
 {
-	struct IOStdReq *io_req = NULL ;
 	char	*pbak;
 	char *a;
 	char *c;
@@ -513,26 +507,6 @@ int main_safe()
 	printf("%s:%d\n",__FUNCTION__,__LINE__);
 
 	init_vars();
-
-	printf("%s:%d\n",__FUNCTION__,__LINE__);
-	
-	appport = (MsgPort*) AllocSysObjectTags(ASOT_PORT, TAG_DONE);
-
-	printf("%s:%d\n",__FUNCTION__,__LINE__);
-
-	io_msg = (MsgPort*) AllocSysObjectTags(ASOT_MESSAGE, TAG_DONE);
-	if (!io_msg) goto quit;
-
-	printf("%s:%d\n",__FUNCTION__,__LINE__);
-
-	io_req = (struct IOStdReq *) AllocSysObjectTags(ASOT_IOREQUEST,
-							ASOIOR_ReplyPort, io_msg, 
-							ASOIOR_Size, sizeof(struct IOStdReq),
-							TAG_END );
-
-	if (!io_req) goto quit;
-
-	printf("%s:%d\n",__FUNCTION__,__LINE__);
 
 	scr = LockPubScreen(NULL);
 	if (!scr) return FALSE;
@@ -627,12 +601,6 @@ printf("%s:%d\n",__FUNCTION__,__LINE__);
 	}
 
 	for (i=1;i<win_end;i++)	 close_menu(i);
-
-quit:
-
-	if (io_msg) FreeSysObject(ASOT_PORT, io_msg);
-	if (appport) FreeSysObject(ASOT_PORT, appport);
-	if (io_req) AllocSysObjectTags(ASOT_IOREQUEST,io_req);
 
 	return 0;
 

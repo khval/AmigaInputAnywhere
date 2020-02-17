@@ -30,3 +30,7 @@ extern config_type config;
 extern struct ai_type *init_ainput();
 extern int req(char *title,  char *body, char *buttons, ULONG image);
 
+extern struct MsgPort *appport;
+extern struct MsgPort *io_msgport;
+extern struct IOStdReq *io_req ;
+

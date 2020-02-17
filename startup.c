@@ -104,6 +104,13 @@ struct WindowIFace *IChooser = NULL;
 struct Library	*RequesterBase = NULL;
 struct WindowIFace *IRequester = NULL;
 
+struct Library		*AIN_Base = NULL;
+struct AIN_IFace	*IAIN = NULL;
+
+struct MsgPort *appport = NULL;
+struct MsgPort	*io_msgport = NULL;
+struct IOStdReq *io_req = NULL ;
+
 bool startProg()
 {
 	if ( ! open_lib( "asl.library", 0L , "main", 1, &AslBase, (struct Interface **) &IAsl  ) ) return FALSE;
@@ -128,10 +135,34 @@ bool startProg()
 	if ( ! open_lib( "string.gadget", 53, "main", 1, &StringBase, (struct Interface **) &IString ) ) return FALSE;
 	if ( ! open_lib( "chooser.gadget", 53, "main", 1, &ChooserBase, (struct Interface **) &IChooser) ) return FALSE;
 	if ( ! open_lib( "requester.class", 53, "main", 1, &RequesterBase, (struct Interface **) &IRequester ) ) return FALSE;
+
+// resources
+
+	appport = (MsgPort*) AllocSysObjectTags(ASOT_PORT, TAG_DONE);
+	if ( ! appport ) return FALSE;
+
+	io_msgport = (MsgPort*) AllocSysObjectTags(ASOT_PORT, TAG_DONE);
+	if ( ! io_msgport ) return FALSE;
+
+	io_req = (struct IOStdReq *) AllocSysObjectTags(ASOT_IOREQUEST,
+							ASOIOR_ReplyPort, io_msgport, 
+							ASOIOR_Size, sizeof(struct IOStdReq),
+							TAG_END );
+
+	if ( ! io_req ) return FALSE;
+
+	return TRUE;
 }
 
 void endProg()
 {
+
+// resources
+
+	if (io_msgport) FreeSysObject(ASOT_PORT, io_msgport);
+	if (appport) FreeSysObject(ASOT_PORT, appport);
+	if (io_req) FreeSysObject(ASOT_IOREQUEST,io_req);
+
 
 // Classes
 
