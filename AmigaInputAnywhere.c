@@ -361,13 +361,20 @@ int get_r_event( int (*fn_event) (int id,int code) )
 
 
 
+
 int close_menu(int layout_nr)
 {
+	if (win[ layout_nr ]) 
+	{
+		RA_CloseWindow( (Object *) layout[ layout_nr ] );
+		win[ layout_nr ] = NULL;
+	}
+
 	if (layout[ layout_nr ])
 	{
+
 		DisposeObject( (Object *) layout[ layout_nr ] );
-		layout[ layout_nr ]	= 0;
-		win[ layout_nr ]	= 0;
+		layout[ layout_nr ]	= NULL;
 	}
 }
 
