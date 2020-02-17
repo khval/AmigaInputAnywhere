@@ -100,8 +100,8 @@ void close_ainput( struct ai_type **ai_io )
 
 	Printf("free amiga input IO\n");
 
-	FreeVec( *ai_io );
-	*ai_io = NULL;
+	FreeVec( ai_io[0] );
+	ai_io[0] = NULL;
 }
 
 
